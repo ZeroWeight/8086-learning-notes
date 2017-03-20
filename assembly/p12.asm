@@ -1,3 +1,5 @@
+; Experiment 1 (Tutorial Guide, p.12)
+
 name my_program
 
 data segment
