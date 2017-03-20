@@ -1,4 +1,4 @@
-name 2015011493_zw
+name prob13
 
 data segment
 buffer1 db 10h dup(0)		;calloc(10);
@@ -16,7 +16,7 @@ assume cs:code, ds:data, es:data, ss:stack;Reg for visit data block
 start: mov ax, data
 mov ds, ax
 mov es, ax		; set up the user data segment
-lea di, buffer2		; a pointer in C
+lea di, buffer1	; a pointer in C
 
 mov cx, 0ah
 mov al,30h
@@ -31,7 +31,7 @@ mov al,41h
 loop2: mov [di],al
 inc al
 inc di
-dex cx
+dec cx
 loop loop2
 
 lea dx, mess		;prepare for output
