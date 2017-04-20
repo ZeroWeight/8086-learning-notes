@@ -1,0 +1,54 @@
+\pagecolor{bgcolor}
+\noindent
+\ttfamily
+\hlstd{\hllin{01\ }\\
+\hllin{02\ }\\
+\hllin{03\ }DATA\ }\hlkwa{SEGMENT}\\
+\hllin{04\ }\hlstd{X\ }\hlkwa{DW\ }\hlstd{}\hlnum{00001H\ }\hlstd{}\hlslc{;THE\ VALUE\ 0F\ X}\\
+\hllin{05\ }\hlstd{Y\ }\hlkwa{DW\ }\hlstd{}\hlnum{09999H}\hlstd{\ \ }\hlnum{}\hlstd{}\hlslc{;THE\ VALUE\ OF\ Y}\\
+\hllin{06\ }\hlstd{P\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFFFH\ }\hlslc{;X+Y}\\
+\hllin{07\ }\hlstd{M\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFFFH\ }\hlslc{;X{-}Y}\\
+\hllin{08\ }\hlstd{}\hlslc{;Z=X+Y}\\
+\hllin{09\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
+\hllin{10\ }\hlstd{\\
+\hllin{11\ }STACK\ }\hlkwa{SEGMENT\ }\hlstd{PARA\ STACK}\\
+\hllin{12\ }\hlkwa{DB\ }\hlstd{}\hlnum{10\ }\hlstd{DUP\ }\hlopt{(}\hlstd{?}\hlopt{)}\\
+\hllin{13\ }\hlstd{STACK\ }\hlkwa{ENDS}\\
+\hllin{14\ }\hlstd{\\
+\hllin{15\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{16\ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACK}\hlopt{,}\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODE}\\
+\hllin{17\ }\hlkwc{START:}\\
+\hllin{18\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATA}\\
+\hllin{19\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{20\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{21\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{STACK}\\
+\hllin{22\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{23\ }\hlstd{}\\
+\hllin{24\ }\hlslc{;DATA\ READ\ IN}\\
+\hllin{25\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{X}\\
+\hllin{26\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{Y}\\
+\hllin{27\ }\hlslc{;ADD\ METHOD}\\
+\hllin{28\ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{29\ }\hlstd{}\hlkwa{DAA}\\
+\hllin{30\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AH}\\
+\hllin{31\ }\hlstd{}\hlkwa{ADC\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{32\ }\hlstd{}\hlkwa{DAA}\\
+\hllin{33\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AH}\\
+\hllin{34\ }\hlstd{}\hlkwa{MOV\ }\hlstd{P}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{35\ }\hlstd{}\hlslc{;SUB\ METHOD}\\
+\hllin{36\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{X}\\
+\hllin{37\ }\hlkwa{SUB\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{38\ }\hlstd{}\hlkwa{DAS}\\
+\hllin{39\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AH}\\
+\hllin{40\ }\hlstd{}\hlkwa{SBB\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{41\ }\hlstd{}\hlkwa{DAS}\\
+\hllin{42\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AH}\\
+\hllin{43\ }\hlstd{}\hlkwa{MOV\ }\hlstd{M}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{44\ }\hlstd{}\\
+\hllin{45\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{04}\hlstd{}\hlkwb{CH}\\
+\hllin{46\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{021H}\\
+\hllin{47\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{48\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize

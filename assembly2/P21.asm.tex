@@ -1,0 +1,44 @@
+\pagecolor{bgcolor}
+\noindent
+\ttfamily
+\hlstd{\hllin{01\ }DATA\ }\hlkwa{SEGMENT}\\
+\hllin{02\ }\hlstd{X\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{EEFFH\ }\hlslc{;THE\ VALUE\ 0F\ X}\\
+\hllin{03\ }\hlstd{Y\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFEEH}\hlstd{\ \ }\hlstd{}\hlslc{;THE\ VALUE\ OF\ Y}\\
+\hllin{04\ }\hlstd{P\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFFFH\ }\hlslc{;X+Y}\\
+\hllin{05\ }\hlstd{M\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFFFH\ }\hlslc{;X{-}Y}\\
+\hllin{06\ }\hlstd{}\hlslc{;Z=X+Y}\\
+\hllin{07\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
+\hllin{08\ }\hlstd{\\
+\hllin{09\ }STACK\ }\hlkwa{SEGMENT\ }\hlstd{PARA\ STACK}\\
+\hllin{10\ }\hlkwa{DB\ }\hlstd{}\hlnum{10\ }\hlstd{DUP\ }\hlopt{(}\hlstd{?}\hlopt{)}\\
+\hllin{11\ }\hlstd{STACK\ }\hlkwa{ENDS}\\
+\hllin{12\ }\hlstd{\\
+\hllin{13\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{14\ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACK}\hlopt{,}\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODE}\\
+\hllin{15\ }\hlkwc{START:}\\
+\hllin{16\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATA}\\
+\hllin{17\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{18\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{19\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{STACK}\\
+\hllin{20\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{21\ }\hlstd{}\\
+\hllin{22\ }\hlslc{;DATA\ READ\ IN}\\
+\hllin{23\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{X}\\
+\hllin{24\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{Y}\\
+\hllin{25\ }\hlslc{;ADD\ METHOD}\\
+\hllin{26\ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{27\ }\hlstd{}\hlkwa{ADC\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{28\ }\hlstd{}\hlkwa{MOV\ }\hlstd{P}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{29\ }\hlstd{}\hlslc{;SUB\ METHOD}\\
+\hllin{30\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{X}\\
+\hllin{31\ }\hlkwa{SUB\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{32\ }\hlstd{}\hlkwa{SBB\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{33\ }\hlstd{}\hlkwa{MOV\ }\hlstd{M}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{34\ }\hlstd{}\\
+\hllin{35\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{04}\hlstd{}\hlkwb{CH}\\
+\hllin{36\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{021H}\\
+\hllin{37\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{38\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize

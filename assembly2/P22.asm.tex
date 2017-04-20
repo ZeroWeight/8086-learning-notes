@@ -1,0 +1,50 @@
+\pagecolor{bgcolor}
+\noindent
+\ttfamily
+\hlstd{\hllin{01\ }\\
+\hllin{02\ }\\
+\hllin{03\ }DATA\ }\hlkwa{SEGMENT}\\
+\hllin{04\ }\hlstd{X\ }\hlkwa{DB\ }\hlstd{}\hlnum{038H}\\
+\hllin{05\ }\hlstd{Y\ }\hlkwa{DB\ }\hlstd{}\hlnum{023H}\\
+\hllin{06\ }\hlstd{XY\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{FFFFH}\hlslc{;X{*}Y}\\
+\hllin{07\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
+\hllin{08\ }\hlstd{\\
+\hllin{09\ }STACK\ }\hlkwa{SEGMENT\ }\hlstd{PARA\ STACK}\\
+\hllin{10\ }\hlkwa{DB\ }\hlstd{}\hlnum{10\ }\hlstd{DUP\ }\hlopt{(}\hlstd{?}\hlopt{)}\\
+\hllin{11\ }\hlstd{STACK\ }\hlkwa{ENDS}\\
+\hllin{12\ }\hlstd{\\
+\hllin{13\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{14\ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACK}\hlopt{,}\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODE}\\
+\hllin{15\ }\hlkwc{START:}\\
+\hllin{16\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATA}\\
+\hllin{17\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{18\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{19\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{STACK}\\
+\hllin{20\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{21\ }\hlstd{}\\
+\hllin{22\ }\hlslc{;DATA\ READ\ IN}\\
+\hllin{23\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{X}\\
+\hllin{24\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{000H}\\
+\hllin{25\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{CL}\hlstd{}\hlopt{,}\hlstd{Y}\\
+\hllin{26\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{00000H}\\
+\hllin{27\ }\hlstd{}\hlkwc{L1:}\\
+\hllin{28\ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{29\ }\hlstd{}\hlkwa{DAA\ }\\
+\hllin{30\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AH}\\
+\hllin{31\ }\hlstd{}\hlkwa{ADC\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\\
+\hllin{32\ }\hlstd{}\hlkwa{DAA}\\
+\hllin{33\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{34\ }\hlstd{}\hlkwa{DEC\ }\hlstd{}\hlkwb{CL}\\
+\hllin{35\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
+\hllin{36\ }\hlstd{}\hlkwa{DAS}\\
+\hllin{37\ }\hlstd{}\hlkwa{XCHG\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
+\hllin{38\ }\hlstd{}\hlkwa{JNZ\ }\hlstd{L1}\\
+\hllin{39\ }\hlkwa{MOV\ }\hlstd{XY}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{40\ }\hlstd{}\\
+\hllin{41\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{04}\hlstd{}\hlkwb{CH}\\
+\hllin{42\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{021H}\\
+\hllin{43\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{44\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize
