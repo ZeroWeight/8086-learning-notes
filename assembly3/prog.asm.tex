@@ -1,3 +1,12 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage{alltt}
+\usepackage{marvosym}
+
+\input {highlight.sty}
+
+\title{prog.asm}
+\begin{document}
 \pagecolor{bgcolor}
 \noindent
 \ttfamily
@@ -10,7 +19,7 @@
 \hllin{07\ }ERROR2\ }\hlkwa{DB\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'TOO\ MANY\ DIGITS'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{\\
 \hllin{08\ }SORT\ }\hlkwa{DB\ }\hlstd{}\hlstr{'$>$$>$$>$\ AFTER\ SORTED\ $<$$<$$<$'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{\\
 \hllin{09\ }MAX\ }\hlkwa{DB\ }\hlstd{}\hlstr{'$>$$>$$>$\ MAX\ NUMBER:\ '}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{\\
-\hllin{10\ }AUX\ }\hlkwa{DB\ }\hlstd{}\hlstr{'10'}\hlstd{}\\
+\hllin{10\ }AUX\ }\hlkwa{DB\ }\hlstd{}\hlstr{'10'}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{}\\
 \hllin{11\ }\hlkwa{ORG\ }\hlstd{}\hlnum{1000H}\\
 \hllin{12\ }\hlstd{NUMBERS\ }\hlkwa{DB\ }\hlstd{}\hlnum{10\ }\hlstd{DUP}\hlopt{(}\hlstd{?}\hlopt{)\ }\\
 \hllin{13\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
@@ -167,63 +176,68 @@
 \hllin{164\ }\hlstd{\ }\hlkwa{LEA\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{NUMBERS\\
 \hllin{165\ }\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
 \hllin{166\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
-\hllin{167\ }\hlstd{\ L7}\hlopt{:}\\
-\hllin{168\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BYTE\ PTR\ }\hlstd{}\hlopt{{[}}\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{{]}}\\
-\hllin{169\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
-\hllin{170\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{SHR\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
-\hllin{171\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{L10\\
-\hllin{172\ }}\hlstd{\ \ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
-\hllin{173\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{174\ }\hlstd{}\hlstd{\ \ }\hlstd{L10}\hlopt{:}\\
-\hllin{175\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{AND\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{00}\hlstd{FH\\
-\hllin{176\ }}\hlstd{\ \ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
-\hllin{177\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
-\hllin{178\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{179\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\ '}\hlstd{\\
-\hllin{180\ }}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{181\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{DEC\ }\hlstd{}\hlkwb{SI}\\
-\hllin{182\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DI}\\
-\hllin{183\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{JNE\ }\hlstd{L7\\
-\hllin{184\ }\ }\hlkwa{RET}\\
-\hllin{185\ }\hlstd{}\hlkwc{WHOLE:}\\
-\hllin{186\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
-\hllin{187\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
-\hllin{188\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{189\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
-\hllin{190\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{191\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BX}\\
-\hllin{192\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
+\hllin{167\ }\hlstd{\ }\hlkwa{CMP\ }\hlstd{}\hlkwb{DI}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{SI}\\
+\hllin{168\ }\hlstd{\ }\hlkwa{JE\ }\hlstd{FIN\\
+\hllin{169\ }\ L7}\hlopt{:}\\
+\hllin{170\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BYTE\ PTR\ }\hlstd{}\hlopt{{[}}\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{{]}}\\
+\hllin{171\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{172\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{SHR\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
+\hllin{173\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{L10\\
+\hllin{174\ }}\hlstd{\ \ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
+\hllin{175\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{176\ }\hlstd{}\hlstd{\ \ }\hlstd{L10}\hlopt{:}\\
+\hllin{177\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{AND\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{00}\hlstd{FH\\
+\hllin{178\ }}\hlstd{\ \ }\hlstd{}\hlkwa{ADD\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
+\hllin{179\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{180\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{181\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\ '}\hlstd{\\
+\hllin{182\ }}\hlstd{\ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{183\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{DEC\ }\hlstd{}\hlkwb{SI}\\
+\hllin{184\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DI}\\
+\hllin{185\ }\hlstd{}\hlstd{\ \ }\hlstd{}\hlkwa{JNE\ }\hlstd{L7\\
+\hllin{186\ }\ FIN}\hlopt{:}\\
+\hllin{187\ }\hlstd{\ }\hlkwa{RET}\\
+\hllin{188\ }\hlstd{}\hlkwc{WHOLE:}\\
+\hllin{189\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
+\hllin{190\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
+\hllin{191\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{192\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
 \hllin{193\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{194\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
-\hllin{195\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
+\hllin{194\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BX}\\
+\hllin{195\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
 \hllin{196\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{197\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
-\hllin{198\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{199\ }\hlstd{}\hlkwa{LEA\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{NUMBERS}\\
-\hllin{200\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
-\hllin{201\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
-\hllin{202\ }\hlstd{}\hlkwc{L8:}\\
-\hllin{203\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BYTE\ PTR\ }\hlstd{}\hlopt{{[}}\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{{]}}\\
-\hllin{204\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
-\hllin{205\ }\hlstd{\ }\hlkwa{SHR\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
-\hllin{206\ }\hlstd{\ }\hlkwa{JZ\ }\hlstd{L9\\
-\hllin{207\ }\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
-\hllin{208\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{209\ }\hlstd{\ L9}\hlopt{:}\\
-\hllin{210\ }\hlstd{\ }\hlkwa{AND\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{00}\hlstd{FH\\
-\hllin{211\ }\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
-\hllin{212\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
-\hllin{213\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{214\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
-\hllin{215\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{216\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
-\hllin{217\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
-\hllin{218\ }\hlstd{\ }\hlkwa{DEC\ }\hlstd{}\hlkwb{SI}\\
-\hllin{219\ }\hlstd{\ }\hlkwa{CMP\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{OFFSET\ }\hlstd{NUMBERS\\
-\hllin{220\ }\ }\hlkwa{JNS\ }\hlstd{L8\\
-\hllin{221\ }\ }\hlkwa{RET}\\
-\hllin{222\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
-\hllin{223\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\hllin{197\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
+\hllin{198\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
+\hllin{199\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{200\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
+\hllin{201\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{202\ }\hlstd{}\hlkwa{LEA\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{NUMBERS}\\
+\hllin{203\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
+\hllin{204\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{02H}\\
+\hllin{205\ }\hlstd{}\hlkwc{L8:}\\
+\hllin{206\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{BYTE\ PTR\ }\hlstd{}\hlopt{{[}}\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{{]}}\\
+\hllin{207\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DL}\\
+\hllin{208\ }\hlstd{\ }\hlkwa{SHR\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{CL}\\
+\hllin{209\ }\hlstd{\ }\hlkwa{JZ\ }\hlstd{L9\\
+\hllin{210\ }\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
+\hllin{211\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{212\ }\hlstd{\ L9}\hlopt{:}\\
+\hllin{213\ }\hlstd{\ }\hlkwa{AND\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{00}\hlstd{FH\\
+\hllin{214\ }\ }\hlkwa{ADD\ }\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{030H}\\
+\hllin{215\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{DH}\\
+\hllin{216\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{217\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\\
+\hllin{218\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{219\ }\hlstd{\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\\
+\hllin{220\ }\hlstd{\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{221\ }\hlstd{\ }\hlkwa{DEC\ }\hlstd{}\hlkwb{SI}\\
+\hllin{222\ }\hlstd{\ }\hlkwa{CMP\ }\hlstd{}\hlkwb{SI}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{OFFSET\ }\hlstd{NUMBERS\\
+\hllin{223\ }\ }\hlkwa{JNS\ }\hlstd{L8\\
+\hllin{224\ }\ }\hlkwa{RET}\\
+\hllin{225\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{226\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
 \mbox{}
 \normalfont
 \normalsize
+\end {document}
+(* LaTeX generated by highlight 3.6, http://www.andre-simon.de/ *)
