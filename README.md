@@ -13,3 +13,10 @@
     ```
 - Transfer a byte (8 bit) & a word (16 bits)
 - Cannot move a byte or word from one memory address to another without transferring via registors. 
+
+#### `NOP`
+- Usage:
+    ```ARM
+       NOP
+    ```
+- Null operation for one clock cycle
