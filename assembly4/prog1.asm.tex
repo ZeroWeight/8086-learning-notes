@@ -1,0 +1,82 @@
+\noindent
+\ttfamily
+\hlstd{}\hllin{01\ }\hlslc{;IRQ3\ }\\
+\hllin{02\ }\hlstd{DATA\ }\hlkwa{SEGMENT}\\
+\hllin{03\ }\hlstd{NUM\ }\hlkwa{DB\ }\hlstd{}\hlnum{0}\\
+\hllin{04\ }\hlstd{MESS1\ }\hlkwa{DB\ }\hlstd{}\hlstr{'PRESSED'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{\\
+\hllin{05\ }MESS2\ }\hlkwa{DB\ }\hlstd{}\hlstr{'DONE'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$'}\hlstd{\\
+\hllin{06\ }KEEP\textunderscore CS\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\\
+\hllin{07\ }\hlstd{KEEP\textunderscore IP\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\\
+\hllin{08\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
+\hllin{09\ }\hlstd{\\
+\hllin{10\ }STACK\ }\hlkwa{SEGMENT\ }\hlstd{PARA\ STACK}\\
+\hllin{11\ }\hlkwa{DW\ }\hlstd{}\hlnum{10\ }\hlstd{DUP}\hlopt{(}\hlstd{?}\hlopt{)}\\
+\hllin{12\ }\hlstd{STACK\ }\hlkwa{ENDS}\\
+\hllin{13\ }\hlstd{\\
+\hllin{14\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{15\ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODE}\hlopt{,}\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACK\\
+\hllin{16\ }\\
+\hllin{17\ }INTER\ }\hlkwa{PROC}\\
+\hllin{18\ }\hlstd{}\hlkwa{INC\ }\hlstd{NUM}\\
+\hllin{19\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{OFFSET\ }\hlstd{MESS1}\\
+\hllin{20\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0920H}\\
+\hllin{21\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{22\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{20H}\\
+\hllin{23\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{20H}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{24\ }\hlstd{}\hlkwa{IRET}\\
+\hllin{25\ }\hlstd{INTER\ }\hlkwa{ENDP}\\
+\hllin{26\ }\hlstd{}\\
+\hllin{27\ }\hlkwc{START:}\\
+\hllin{28\ }\hlstd{}\hlkwa{CLI}\\
+\hllin{29\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATA}\\
+\hllin{30\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{ES}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{31\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{32\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{STACK}\\
+\hllin{33\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{34\ }\hlstd{}\hlslc{;INTER\ No.\ GET\ AND\ PROTECT}\\
+\hllin{35\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0350}\hlstd{}\hlkwb{BH}\\
+\hllin{36\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{37\ }\hlstd{}\hlkwa{MOV\ }\hlstd{KEEP\textunderscore IP}\hlopt{,}\hlstd{}\hlkwb{BX}\\
+\hllin{38\ }\hlstd{}\hlkwa{MOV\ }\hlstd{KEEP\textunderscore CS}\hlopt{,}\hlstd{}\hlkwb{ES}\\
+\hllin{39\ }\hlstd{}\hlkwa{PUSH\ }\hlstd{}\hlkwb{DS}\\
+\hllin{40\ }\hlstd{}\hlslc{;SET\ THE\ INTER\ TABLE\ }\\
+\hllin{41\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{OFFSET\ }\hlstd{INTER}\\
+\hllin{42\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{}\hlkwa{SEG\ }\hlstd{INTER}\\
+\hllin{43\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{44\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{250}\hlstd{}\hlkwb{BH}\\
+\hllin{45\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{46\ }\hlstd{}\hlkwa{POP\ }\hlstd{}\hlkwb{DS}\\
+\hllin{47\ }\hlstd{}\hlslc{;SET\ THE\ INTER\ MASK}\\
+\hllin{48\ }\hlstd{}\hlkwa{IN\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{21H}\\
+\hllin{49\ }\hlstd{}\hlkwa{AND\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{F7H}\hlslc{;CANCEL\ MASK\ IRQ3}\\
+\hllin{50\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{21H}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{51\ }\hlstd{}\hlkwa{STI}\\
+\hllin{52\ }\hlstd{}\hlkwc{L1:}\\
+\hllin{53\ }\hlstd{}\hlkwa{CMP\ }\hlstd{NUM}\hlopt{,}\hlstd{}\hlnum{10}\\
+\hllin{54\ }\hlstd{}\hlkwa{JNZ\ }\hlstd{L1}\\
+\hllin{55\ }\\
+\hllin{56\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{OFFSET\ }\hlstd{MESS2}\\
+\hllin{57\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{09H}\\
+\hllin{58\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{59\ }\hlstd{}\\
+\hllin{60\ }\hlslc{;END\ AND\ RECOVER}\\
+\hllin{61\ }\hlstd{}\hlslc{;RECOVER\ THE\ INTER\ MASK}\\
+\hllin{62\ }\hlstd{}\hlkwa{IN\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{21H}\\
+\hllin{63\ }\hlstd{}\hlkwa{OR\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{008H}\\
+\hllin{64\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{21H}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{65\ }\hlstd{}\hlslc{;RECOVER\ THE\ INTER\ TABLE}\\
+\hllin{66\ }\hlstd{}\hlkwa{PUSH\ }\hlstd{}\hlkwb{DS}\\
+\hllin{67\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{KEEP\textunderscore IP}\\
+\hllin{68\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{KEEP\textunderscore CS}\\
+\hllin{69\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{70\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{250}\hlstd{}\hlkwb{BH}\\
+\hllin{71\ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{72\ }\hlstd{}\hlkwa{POP\ }\hlstd{}\hlkwb{DS}\\
+\hllin{73\ }\hlstd{}\\
+\hllin{74\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{04}\hlstd{C00H}\\
+\hllin{75\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{76\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{77\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize

@@ -1,0 +1,39 @@
+\documentclass[UTF8,a4paper]{paper}
+\usepackage{ctex}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{alltt}
+\usepackage{marvosym}
+\usepackage{xcolor}
+\input {highlight.sty}
+\title{计算机原理第四次实验报告}
+\author{张蔚桐\ 2015011493\ 自55}
+\begin {document}
+\maketitle
+\section{实验目的}
+理解中断控制器8259 及计数/定时器8253 的工作原理，掌握其使用方法。
+\section{中断控制器8259的应用}
+程序首先完成关中断，完成中断矢量表的修改，之后对8259编程开启IRQ3中断，之后开中断进行计数和显示工作
+\input{prog1.asm}
+\section{计数/定时器8253的应用}
+程序完成对8253的编程，硬件上将CLK0和1MHz时钟连接，OUT0接CLK1，OUT1接LED，GATE0和GATE1拉高，经双计数器分频将1MHz时钟降到1Hz控制LED闪烁。
+\input{prog2.asm}
+\section{选做部分}
+将上述两端代码合并，接线仅将OUT1改接到IRQ3中断，显示自动计时输出
+\input{prog3.asm}
+\section{思考题}
+为什么要将8253 的两个计数器串起来(这种连接方式又称级连) 使用，只用一个计数器可以实现
+106 分频吗?
+
+单个计数器只有16 位，在十进制工作模式下，最多计数到9999(压缩BCD码），不可能用一个计数器实现$10^6$ 分频。
+\section{完成情况及心得体会}
+这次实验的主要目的是了解掌握中断控制器8259 和计数器8253 的使用方式。这次实验用到了实验箱，
+是第一次软硬结合的实验，除了编程外还有硬件上的接线。编程上的难点主要在于弄清8259 及8253 的使
+用方法，要对功能号、类型号以及各控制器、计数器的控制端口号熟悉才能完成。接线虽然不复杂，但也需
+要仔细检查才能达到预期的结果。
+\end{document}

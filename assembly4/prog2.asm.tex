@@ -1,0 +1,35 @@
+\noindent
+\ttfamily
+\hlstd{}\hllin{01\ }\hlslc{;1MHz\ TO\ CLK0,\ OUT0\ TO\ CLK1,\ OUT1\ TO\ LED}\\
+\hllin{02\ }\hlstd{STACK\ }\hlkwa{SEGMENT\ }\hlstd{PARA\ STACK\ }\\
+\hllin{03\ }\hlkwa{DW\ }\hlstd{}\hlnum{10\ }\hlstd{DUP\ }\hlopt{(}\hlstd{?}\hlopt{)}\\
+\hllin{04\ }\hlstd{}\hlkwa{END\ }\hlstd{STACK\ \\
+\hllin{05\ }\\
+\hllin{06\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{07\ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACK}\hlopt{,}\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{,}\hlstd{CODE}\\
+\hllin{08\ }\hlkwc{START:}\\
+\hllin{09\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{STACK}\\
+\hllin{10\ }\hlkwa{MOV\ }\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{11\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0283H}\\
+\hllin{12\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{037H}\\
+\hllin{13\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{14\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{280H}\\
+\hllin{15\ }\hlstd{}\hlkwa{XOR\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{16\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{17\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{010H}\\
+\hllin{18\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{19\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0283H}\\
+\hllin{20\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{077H}\\
+\hllin{21\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{22\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0281H}\\
+\hllin{23\ }\hlstd{}\hlkwa{XOR\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{24\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{25\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,}\hlstd{}\hlnum{10H}\\
+\hllin{26\ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AL}\\
+\hllin{27\ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{}\hlnum{4}\hlstd{C00H}\\
+\hllin{28\ }\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{29\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{30\ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize
