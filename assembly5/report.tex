@@ -1,0 +1,43 @@
+\documentclass[UTF8,a4paper]{paper}
+\usepackage{ctex}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{alltt}
+\usepackage{marvosym}
+\usepackage{xcolor}
+\input {highlight.sty}
+\title{计算机原理第五次实验报告}
+\author{张蔚桐\ 2015011493\ 自55}
+\begin {document}
+\maketitle
+\section{实验目的}
+\begin{enumerate}
+\item 理解中断控制器8259 及计数/定时器8253 的工作原理，掌握其使用方法。
+\item 练习使用DOS 及BIOS 功能调用来编写I/O 程序.
+\end{enumerate}
+\section{单击测试}
+直接对计算机自带的8250 芯片编程，将其设置成1200 波特率、8 个数据位、1 个停止位、奇校验规则、
+自检方式。用DOS 功能调用(INT21H) 接收键入字符（需要回显），通过8250 以查询方式发送又自己接收
+并在CRT 上显示。直至键入空格(ASC￿ 码为20H) 时退回DOS。\\ 
+
+\input{prob1.asm}
+\section{计算机间通信}
+将上程序修改成两台计算机之间以查询方式通信，即一方键入的字符在另一个CRT 上显示，反之亦然，
+任何一方键入空格，双方都退出。\\ 
+
+\input{prob2.asm}
+\section{选做部分}
+监视键盘，若键入字母键“S”则将事先存在数据区中的一个字符串串行传送给对方显示；若键入字母“R”
+则将对方机器数据区中的一个字符串传送过来在CRT 上显示。两个字符串都以\$ 为结束符。\\ 
+
+\input{prob3.asm}
+\section{完成情况及心得体会}
+这次实验的主要目的是复习8250 的工作原理及其在串行通信中的应用。实验过程中需要用到连接好的电
+脑，所以调试也只能在实验室内完成，使得本次实验的难度又有所增加。作为本学期最后一次实验，确实花
+费了更多的时间，不过相较于以前更加有趣。本次实验复习了课堂知识，巩固了汇编语言的编写，收获不小。
+\end{document}

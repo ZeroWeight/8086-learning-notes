@@ -1,84 +1,89 @@
-DATA SEGMENT
-DATA ENDS
-STACK SEGMENT PARA STACK
-DW 1024 DUP(?)
-STACK ENDS
+DATAS  SEGMENT              
+DIVID  DW    60H
+DATAS  ENDS
 
-CODE SEGMENT
-ASSUME CS:CODES,DS:DATA,ES:DATA,SS:STACK
-MAIN PROC FAR
-START:
-MOV AX,DATA
-MOV DS,AX
-MOV ES,AX
-MOV AL,080H
-MOV DX,03FBH
-OUT DX,AL
-MOV AX,060H
-MOV DX,03F8H
-OUT DX,AL
-MOV AL,AH
-MOV DX,03F9H
-OUT DX,AL
-MOV AL,0BH
-MOV DX,03FBH
-OUT DX,AL
-MOV AL,03H
-MOV DX,03FCH
-OUT DX,AL
-XOR AL,AL
-MOV DX,03F9H
-OUT DX,AL
+STACKS  SEGMENT   STACK      
+    DW    128 DUP(?)  
+STACKS  ENDS
 
-L1:
-MOV DX,03FDH
-IN AL,DX
-TEST AL,01EH
-JNZ ERROR
-TEST AL,01H
-JNZ REC
-TEST AL,020H
-JZ L1
-MOV AH,1
-INT 16H
-JZ L1
-MOV AH,1
-INT 21H
-CMP AL,0DH
-JNZ SEND
-MOV AX,0E0AH
-INT 10H
-SEND:
-MOV DX,03F8H
-OUT DX,AL
-CMP AL,020H
-JNZ L1
-MOV AX,4C00H
-INT 21H
-REC:
-MOV DX,03F8H
-IN AL,DX
-CMP AL,020H
-JNZ CHAR
-MOV AX,04C00H
-INT 21H
-CHAR:
-PUSH AX
-MOV AH,0EH
-INT 10H
-POP AX
-CMP AL,0DH
-JNZ L1
-MOV AX,0E0AH
-INT 10H
-JMP L1
-ERROR:
-MOV DX,03F8H
-IN AL,DX
-MOV AL,'?'
-MOV AH,14
-INT 10H
-JMP L1
-MAIN ENDP
-CODE ENDS
-ENDS START
+CODES  SEGMENT               
+ASSUME    CS:CODES,DS:DATAS
+SUB1  PROC      FAR
+  
+START:  MOV       AX,DATAS
+        MOV       DS,AX
+;设置波特率为1200
+        MOV       AL,80H
+        MOV       DX,3FBH
+        OUT       DX,AL
+        MOV       AX,DIVID
+        MOV       DX,3F8H
+        OUT       DX,AL       
+        MOV       AL,AH
+        MOV       DX,3F9H
+        OUT       DX,AL        
+        MOV       AL,00001011B
+        MOV       DX,3FBH     
+        OUT       DX,AL
+        MOV       AL,00000011B
+        MOV       DX,3FCH
+        OUT       DX,AL
+        MOV       AL,0
+        MOV       DX,3F9H
+        OUT       DX,AL   
+WAIT_FOR:
+        MOV       DX,3FDH
+        IN        AL,DX
+        TEST      AL,1EH 
+        JNZ       ERROR
+        TEST      AL,1 
+        JNZ       RECEIVE
+        TEST      AL,20H 
+        JZ        WAIT_FOR 
+        MOV       AH,1	
+        INT       16H         
+        JZ        WAIT_FOR
+        MOV       AH,1 
+        INT       21H
+        CMP       AL,0DH
+        JNZ       SENDCHAR    
+        MOV       AL,0AH 
+        MOV       AH,0EH
+        INT       10H
+        
+SENDCHAR:  
+        MOV       DX,3F8H
+        OUT       DX,AL
+        CMP       AL,20H
+        JNZ       NO_STOP
+        MOV       AH,4CH
+        INT       21H
+NO_STOP:  
+        JMP       WAIT_FOR    
+RECEIVE:
+        MOV       DX,3F8H
+        IN        AL,DX
+        CMP       AL,20H
+        JNZ       CHAR
+        MOV       AH,4CH
+        INT       21H
+CHAR:   PUSH      AX         
+        MOV       AH,0EH
+        INT       10H
+        POP       AX
+        CMP       AL,0DH
+        JNZ       WAIT_FOR
+        MOV       AL,0AH
+        MOV       AH,0EH    
+        INT       10H
+        JMP       WAIT_FOR
+ERROR:  MOV       DX,3F8H
+        IN        AL,DX
+        MOV       AL,'?'      
+        MOV       AH,14
+        INT       10H
+        JMP       WAIT_FOR
+SUB1  ENDP
+
+CODES  ENDS
+END    START
