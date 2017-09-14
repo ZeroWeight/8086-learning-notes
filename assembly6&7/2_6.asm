@@ -1,4 +1,4 @@
-;ÊµÑéÆßÄÚÈÝÈý
+;å®žéªŒä¸ƒå†…å®¹ä¸‰
 
 DATAS SEGMENT
 DATAS ENDS
@@ -15,32 +15,32 @@ START:
     MOV DS,AX
     
     MOV DX, 283H
-    MOV AL, 10000000B   	;¿ØÖÆ×Ö£¬·½Ê½0£¬A¿ÚC¿ÚÊä³ö
+    MOV AL, 10000000B   	;æŽ§åˆ¶å­—ï¼Œæ–¹å¼0ï¼ŒAå£Cå£è¾“å‡º
     OUT DX, AL
 	
 NEXT:
     MOV DX, 282H
     MOV AL, 01H
-    OUT DX, AL         		;C¿ÚÊä³ö01H
+    OUT DX, AL         		;Cå£è¾“å‡º01H
     MOV DX, 280H
     MOV AL, 3FH
-    OUT DX, AL          	;A¿ÚÏòÊýÂë¹ÜÏÔÊ¾¡®0¡¯
+    OUT DX, AL          	;Aå£å‘æ•°ç ç®¡æ˜¾ç¤ºâ€˜0â€™
     
     CALL DELAY
     
     MOV DX, 280H
     MOV AL, 06H
-    OUT DX, AL          	;A¿ÚÏòÊýÂë¹ÜÏÔÊ¾¡®1¡¯
+    OUT DX, AL          	;Aå£å‘æ•°ç ç®¡æ˜¾ç¤ºâ€˜1â€™
     MOV DX, 282H
     MOV AL, 02H
-    OUT DX, AL          	;C¿ÚÊä³ö02H
+    OUT DX, AL          	;Cå£è¾“å‡º02H
 
     CALL DELAY
     
     MOV AH, 1        
     INT 16H
     JZ NEXT
-    CMP AL, 20H            	;¼ì²â¿Õ¸ñ
+    CMP AL, 20H            	;æ£€æµ‹ç©ºæ ¼
     JZ EXIT
     JMP NEXT
       

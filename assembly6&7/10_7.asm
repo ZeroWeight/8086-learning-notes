@@ -12,19 +12,19 @@ START:
     MOV AX,DATAS
     MOV DS,AX
     
-    MOV DX,283H         ;ÉèÖÃ¿ØÖÆ×Ö
+    MOV DX,283H         ;è®¾ç½®æŽ§åˆ¶å­—
     MOV AL,10000000B
     OUT DX,AL
 
     MOV BX,0
     MOV CX,0
 MAIN:
-    MOV AH,0BH        ;¼ì²éÊÇ·ñÓÐ¼üÅÌ¼üÈë
+    MOV AH,0BH        ;æ£€æŸ¥æ˜¯å¦æœ‰é”®ç›˜é”®å…¥
     INT 21H
     INC AL
     JNE NEXT
     
-    MOV AH,1        ;¼üÈë¸ßÎ»
+    MOV AH,1        ;é”®å…¥é«˜ä½
     INT 21H
     CMP AL,'0'
     JS EXIT
@@ -33,7 +33,7 @@ MAIN:
     SUB AL,30H
     MOV BL,AL
    
-    MOV AH,1        ;¼üÈëµÍÎ»
+    MOV AH,1        ;é”®å…¥ä½Žä½
     INT 21H
     CMP AL,'0'
     JS EXIT
@@ -42,30 +42,30 @@ MAIN:
     SUB AL,30H
     MOV CL,AL
 
-CALL DELAY        ;ÑÓÊ±
-CALL DELAY        ;ÑÓÊ±
-CALL DELAY        ;ÑÓÊ±
+CALL DELAY        ;å»¶æ—¶
+CALL DELAY        ;å»¶æ—¶
+CALL DELAY        ;å»¶æ—¶
 
 NEXT:
 
-;Êä³ö0
+;è¾“å‡º0
     MOV DX,280H
     PUSH BX
     MOV BX,CX
     MOV AL,[NUM+BX]
-    OUT DX,AL        ;A¿ÚÊä³ö
+    OUT DX,AL        ;Aå£è¾“å‡º
     MOV DX,282H
     MOV AL,01H
     OUT DX,AL
     POP BX
     
-    CALL DELAY        ;ÑÓÊ±
+    CALL DELAY        ;å»¶æ—¶
 
-;¹ØµôÁ½¸ö¹Ü
+;å…³æŽ‰ä¸¤ä¸ªç®¡
     MOV DX,282H
     MOV AL,00H
     OUT DX,AL    
-;Êä³ö1    
+;è¾“å‡º1    
     MOV DX,280H
     MOV AL,[NUM+BX]
     OUT DX,AL
@@ -73,9 +73,9 @@ NEXT:
     MOV AL,02H
     OUT DX,AL
     
-    CALL DELAY        ;ÑÓÊ±
+    CALL DELAY        ;å»¶æ—¶
 
-;¹ØµôÁ½¸ö¹Ü
+;å…³æŽ‰ä¸¤ä¸ªç®¡
     MOV DX,282H
     MOV AL,00H
     OUT DX,AL     
@@ -86,9 +86,9 @@ EXIT:
     INT 21H
 
 
-;-----------------ÑÓÊ±×Ó³ÌÐò-------------------
+;-----------------å»¶æ—¶å­ç¨‹åº-------------------
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-DELAY  PROC    ;FAR;ÑÓÊ±×Ó³ÌÐò
+DELAY  PROC    ;FAR;å»¶æ—¶å­ç¨‹åº
        PUSH    CX
        PUSH    AX
        MOV    AX,000FH
