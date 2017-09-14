@@ -1,4 +1,4 @@
-;ÊµÑéÆßÄÚÈÝÒ»
+;å®žéªŒä¸ƒå†…å®¹ä¸€
 
 
 DATA SEGMENT
@@ -17,20 +17,20 @@ START:
     
     MOV DX, 283H
     MOV AL, 10010000B	
-    OUT DX, AL           		;¿ØÖÆ×Ö£¬·½Ê½0£¬AÊäÈë£¬CÊä³ö
+    OUT DX, AL           		;æŽ§åˆ¶å­—ï¼Œæ–¹å¼0ï¼ŒAè¾“å…¥ï¼ŒCè¾“å‡º
 	
 NEXT:    
     MOV DX, 280H
-    IN AL, DX				;¶ÁA¿Ú					
+    IN AL, DX				;è¯»Aå£					
     MOV DX, 282H
-    OUT DX, AL				;Ð´C¿Ú
+    OUT DX, AL				;å†™Cå£
     MOV AH, 1
-    INT 16H				;¼ì²â¼üÅÌÊÇ·ñ°´ÏÂ
-    JZ NEXT				;Ã»ÓÐÔò¼ÌÐøÉ¨Ãè
+    INT 16H				;æ£€æµ‹é”®ç›˜æ˜¯å¦æŒ‰ä¸‹
+    JZ NEXT				;æ²¡æœ‰åˆ™ç»§ç»­æ‰«æ
     MOV AH, 0
-    INT 16H				;¶Á°´¼ü					
+    INT 16H				;è¯»æŒ‰é”®					
     CMP AL, 20H
-    JZ EXIT				;¿Õ¸ñÍË³ö
+    JZ EXIT				;ç©ºæ ¼é€€å‡º
     JMP NEXT
                  
 EXIT:    
