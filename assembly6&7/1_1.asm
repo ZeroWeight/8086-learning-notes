@@ -1,4 +1,5 @@
-;实验六内容一
+; 实验六内容一
+; 金帆 2015011506
 
 DATA segment
 	SAW_WAVE db 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
@@ -53,6 +54,7 @@ DATA segment
 DATA ends
 
 STACKS segment
+	db 100 dup(?)
 STACKS ends
 
 CODE segment
@@ -71,6 +73,7 @@ MAIN_LOOP:
 	jnz JUDGE ; jump if a key is struck
 	jmp MAIN_LOOP
 	
+START_CONVERSION: 
 	; start conversion
 	mov ax, di
 	cmp ax, 0ffh
@@ -86,10 +89,18 @@ P1:
 	cmp al, 02h ; generate a sine wave
 	jz WAVE_SINE
 	
+	push ax
+	push bx
+	push cx
 DELAY: 
 	mov cx, 0fffh ; determines the delay
 P2: 
 	LOOP P2
+	pop cx
+	pop bx
+	pop ax
+	
+	
 	inc di
 	jmp MAIN_LOOP
 	
@@ -104,7 +115,7 @@ JUDGE:
 	mov WAVE_TYPE, al
 	mov di, 00h
 	
-	jmp MAIN_LOOP
+	jmp START_CONVERSION
 	
 EXIT: 
 	mov ah, 4ch
