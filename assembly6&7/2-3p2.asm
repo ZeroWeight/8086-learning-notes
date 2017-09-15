@@ -14,29 +14,30 @@ START:
     MOV AX,DATA    
     MOV DS,AX
     MOV ES,AX
-;è®¾ç½®8253å·¥ä½œæ–¹å¼
+;ÉèÖÃ8253¹¤×÷·½Ê½
     MOV DX,293H
     MOV AL,00110111B
     OUT DX,AL
     
     MOV DX,290H
-    MOV AL,90
+    XOR AL,AL
     OUT DX,AL
+    MOV AL,50
     OUT DX,AL
 
-;è®¾ç½®8255å·¥ä½œæ–¹å¼
-    MOV DX,283H         ;è®¾ç½®æŽ§åˆ¶å­—
+;ÉèÖÃ8255¹¤×÷·½Ê½
+    MOV DX,283H         ;ÉèÖÃ¿ØÖÆ×Ö
     MOV AL,10000000B
     OUT DX,AL       
 
-;ä¿®æ”¹ä¸­æ–­çŸ¢é‡è¡¨
-    MOV AH,35H                ;è¯»å‡ºåŽŸä¸­æ–­çŸ¢é‡è¡¨ä¿¡æ¯
+;ÐÞ¸ÄÖÐ¶ÏÊ¸Á¿±í
+    MOV AH,35H                ;¶Á³öÔ­ÖÐ¶ÏÊ¸Á¿±íÐÅÏ¢
     MOV AL,0BH
     INT 21H
-    MOV KEEPIP,BX            ;ä¿å­˜åŽŸä¸­æ–­çŸ¢é‡è¡¨ä¿¡æ¯
+    MOV KEEPIP,BX            ;±£´æÔ­ÖÐ¶ÏÊ¸Á¿±íÐÅÏ¢
     MOV KEEPCS,ES
         
-    PUSH DS                    ;ä¿®æ”¹ä¸­æ–­çŸ¢é‡è¡¨
+    PUSH DS                    ;ÐÞ¸ÄÖÐ¶ÏÊ¸Á¿±í
     MOV DX,OFFSET INTR
     MOV AX,SEG INTR
     MOV DS,AX
@@ -45,26 +46,26 @@ START:
     INT 21H
     POP DS
         
-;æ‰“å¼€IRQ3çš„å±è”½
+;´ò¿ªIRQ3µÄÆÁ±Î
     IN AL,21H
     AND AL,011110111B
     OUT 21H,AL           
     
     MOV BL,0
-MAIN:                                   ;æ¶ˆæ¯å¾ªçŽ¯
+MAIN:                                   ;ÏûÏ¢Ñ­»·
     HLT
     MOV AH,1
-    INT 16H            ;æœ‰é”®ç›˜è¾“å…¥ï¼Œåˆ™é€€å‡ºæ¶ˆæ¯å¾ªçŽ¯
-    JNE EXIT
+    INT 16H            ;ÓÐ¼üÅÌÊäÈë£¬ÔòÍË³öÏûÏ¢Ñ­»·
+    JNZ EXIT
     JMP MAIN
 
 EXIT:
-;æ¢å¤IRQ3çš„å±è”½
+;»Ö¸´IRQ3µÄÆÁ±Î
     IN  AL,21H
     OR  AL,00001000B
     OUT 21H,AL
         
-;æ¢å¤ä¸­æ–­çŸ¢é‡è¡¨
+;»Ö¸´ÖÐ¶ÏÊ¸Á¿±í
     PUSH DS
     MOV DX,KEEPIP
     MOV AX,KEEPCS
@@ -74,13 +75,13 @@ EXIT:
     INT 21H
     POP DS
     
-    MOV AH,4CH                ;è¿”å›žDOS
+    MOV AH,4CH                ;·µ»ØDOS
     INT 21H
 
 
-;------------------ä¸­æ–­æœåŠ¡å­ç¨‹åº-----------------------
+;------------------ÖÐ¶Ï·þÎñ×Ó³ÌÐò-----------------------
 INTR PROC
-;å…³æŽ‰ä¸¤ä¸ªç®¡
+;¹ØµôÁ½¸ö¹Ü
 
     MOV DX,282H
     MOV AL,00H
@@ -91,14 +92,14 @@ INTR PROC
 OUT0:
     MOV DX,280H
     MOV AL,3FH
-    OUT DX,AL        ;Aå£è¾“å‡º
+    OUT DX,AL        ;A¿ÚÊä³ö
     MOV DX,282H
     MOV AL,01H
     OUT DX,AL
     MOV BL,1
     JMP END_INTR
 OUT1:   
-;è¾“å‡º1    
+;Êä³ö1    
     MOV DX,280H
     MOV AL,06H
     OUT DX,AL
@@ -109,7 +110,7 @@ OUT1:
     JMP END_INTR
  
 END_INTR:
-    MOV AL,20H                    ;å‘å‡ºEOIä¿¡å·
+    MOV AL,20H                    ;·¢³öEOIÐÅºÅ
     OUT 0A0H,AL
     OUT 20H,AL
 IRET
