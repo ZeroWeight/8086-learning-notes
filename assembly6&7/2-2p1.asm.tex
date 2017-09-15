@@ -1,0 +1,128 @@
+\noindent
+\ttfamily
+\hlstd{\hllin{01\ }DATAS\ }\hlkwa{SEGMENT}\\
+\hllin{02\ }\hlstd{KEEP\textunderscore IP\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\\
+\hllin{03\ }\hlstd{KEEP\textunderscore CS\ }\hlkwa{DW\ }\hlstd{}\hlnum{0}\hlstd{\ \ }\hlnum{}\\
+\hllin{04\ }\hlstd{FLAG\ }\hlkwa{DB\ }\hlstd{}\hlnum{0}\hlstd{\ \ \ }\hlnum{}\\
+\hllin{05\ }\hlstd{PASSWORD\ }\hlkwa{DB\ }\hlstd{}\hlnum{0}\hlstd{F0H}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{FH\ \\
+\hllin{06\ }OK\ }\hlkwa{DB\ }\hlstd{}\hlstr{'OK'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlstr{'\$'}\hlstd{\\
+\hllin{07\ }NO\ }\hlkwa{DB\ }\hlstd{}\hlstr{'NO'}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlkwb{DH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlstr{'\$'}\hlstd{\\
+\hllin{08\ }DATAS\ }\hlkwa{ENDS}\\
+\hllin{09\ }\hlstd{\\
+\hllin{10\ }STACKS\ }\hlkwa{SEGMENT}\\
+\hllin{11\ }\hlstd{STACKS\ }\hlkwa{ENDS}\\
+\hllin{12\ }\hlstd{\\
+\hllin{13\ }CODES\ }\hlkwa{SEGMENT}\\
+\hllin{14\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODES}\hlopt{,}\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATAS}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACKS\\
+\hllin{15\ }\\
+\hllin{16\ }MAIN\ }\hlkwa{PROC\ FAR}\\
+\hllin{17\ }\hlstd{}\hlkwc{START:}\\
+\hllin{18\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATAS\\
+\hllin{19\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{20\ }\hlstd{\\
+\hllin{21\ }}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{22\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{283H\ }\\
+\hllin{23\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{10110000}\hlstd{B\\
+\hllin{24\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\\
+\hllin{25\ }\hlstd{\\
+\hllin{26\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{283H}\\
+\hllin{27\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{00001001}\hlstd{B\\
+\hllin{28\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\hlstd{\ \ \ \ \ \ \ }\hlkwb{}\\
+\hllin{29\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{30\ }}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{31\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{35H}\\
+\hllin{32\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{BH\ }\\
+\hllin{33\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{34\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{KEEP\textunderscore IP}\hlopt{,\ }\hlstd{}\hlkwb{BX}\\
+\hllin{35\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{KEEP\textunderscore CS}\hlopt{,\ }\hlstd{}\hlkwb{ES}\\
+\hllin{36\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{37\ }}\hlstd{\ \ \ }\hlstd{\\
+\hllin{38\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{PUSH\ }\hlstd{}\hlkwb{DS\ }\\
+\hllin{39\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{OFFSET\ }\hlstd{INTR\\
+\hllin{40\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwa{SEG\ }\hlstd{INTR\ \\
+\hllin{41\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AX\ }\\
+\hllin{42\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{25H}\hlstd{\ \ \ }\hlnum{}\\
+\hllin{43\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{BH\ }\\
+\hllin{44\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H\ }\\
+\hllin{45\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{POP\ }\hlstd{}\hlkwb{DS\ }\\
+\hllin{46\ }\hlstd{\\
+\hllin{47\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{F7H}\hlstd{\ \ \ }\hlstd{\\
+\hllin{48\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{21H}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\\
+\hllin{49\ }\hlstd{}\\
+\hllin{50\ }\hlkwc{WAIT\textunderscore FOR1:}\hlstd{\ \ \ \ \ \ \ \ \ }\hlkwc{}\\
+\hllin{51\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{BL}\hlstd{}\hlopt{,\ }\hlstd{FLAG\\
+\hllin{52\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{BL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\\
+\hllin{53\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{WAIT\textunderscore FOR2}\hlstd{\ \ \ }\hlstd{\\
+\hllin{54\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{WAIT\textunderscore FOR1\\
+\hllin{55\ }}\hlstd{\ \ \ }\hlstd{}\\
+\hllin{56\ }\hlkwc{WAIT\textunderscore FOR2:}\hlstd{\ \ \ \ \ \ \ \ \ }\hlkwc{}\\
+\hllin{57\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{CL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{FFH\\
+\hllin{58\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{EXIT\\
+\hllin{59\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{CL}\hlstd{\ \ \ \ \ }\hlkwb{}\\
+\hllin{60\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{2}\\
+\hllin{61\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\hlstd{\ \ }\hlnum{}\\
+\hllin{62\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{BH}\hlstd{}\hlopt{,}\hlstd{\ \ \ \ }\hlopt{}\hlstd{}\hlkwb{CL}\hlstd{\ \ }\hlkwb{}\\
+\hllin{63\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{FLAG}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{\ \ \ \ }\hlnum{}\\
+\hllin{64\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{WAIT2}\\
+\hllin{65\ }\hlkwc{WAIT2:}\\
+\hllin{66\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{BL}\hlstd{}\hlopt{,\ }\hlstd{FLAG\\
+\hllin{67\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{BL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\\
+\hllin{68\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{CHECK}\hlstd{\ \ \ \ \ \ \ }\hlstd{\\
+\hllin{69\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{WAIT2}\hlstd{\ \ \ }\hlstd{}\\
+\hllin{70\ }\\
+\hllin{71\ }\hlkwc{CHECK:}\\
+\hllin{72\ }\hlstd{\\
+\hllin{73\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{CL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{FFH\\
+\hllin{74\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{EXIT\\
+\hllin{75\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DL}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{CL}\hlstd{\ \ \ \ \ }\hlkwb{}\\
+\hllin{76\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{2}\\
+\hllin{77\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\hlstd{\ \ }\hlnum{}\\
+\hllin{78\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{BH}\hlstd{}\hlopt{,}\hlstd{PASSWORD\\
+\hllin{79\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JNZ\ }\hlstd{ERROR\\
+\hllin{80\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{CL}\hlstd{}\hlopt{,}\hlstd{PASSWORD}\hlopt{+}\hlstd{}\hlnum{1}\\
+\hllin{81\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JNZ\ }\hlstd{ERROR\\
+\hllin{82\ }}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{83\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{9}\\
+\hllin{84\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{LEA\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{OK}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{\\
+\hllin{85\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{86\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{WAIT\textunderscore FOR1}\\
+\hllin{87\ }\\
+\hllin{88\ }\hlkwc{ERROR:}\\
+\hllin{89\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{9}\\
+\hllin{90\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{LEA\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{NO}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{\\
+\hllin{91\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{92\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{WAIT\textunderscore FOR1\\
+\hllin{93\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\\
+\hllin{94\ }\hlkwc{EXIT:}\\
+\hllin{95\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{96\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{FFH}\hlstd{\ \ \ \ \ }\hlstd{\\
+\hllin{97\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{21H}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\hlstd{\ \ \ \ \ }\hlkwb{}\\
+\hllin{98\ }\hlstd{\\
+\hllin{99\ }}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{100\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{PUSH\ }\hlstd{}\hlkwb{DS}\hlstd{\ \ }\hlkwb{}\\
+\hllin{101\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{KEEP\textunderscore IP}\hlstd{\ \ }\hlstd{\\
+\hllin{102\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,\ }\hlstd{KEEP\textunderscore CS\ \\
+\hllin{103\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AX\ }\\
+\hllin{104\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{25H\ }\\
+\hllin{105\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlkwb{BH\ }\\
+\hllin{106\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H\ }\\
+\hllin{107\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{POP\ }\hlstd{}\hlkwb{DS\ }\\
+\hllin{108\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{4}\hlstd{}\hlkwb{CH}\\
+\hllin{109\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{110\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{111\ }INTR\ }\hlkwa{PROC}\\
+\hllin{112\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{FLAG}\hlopt{,\ }\hlstd{}\hlnum{1}\hlstd{\ \ \ \ \ \ }\hlnum{}\\
+\hllin{113\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{280H}\\
+\hllin{114\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{IN\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{DX}\\
+\hllin{115\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{CL}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\\
+\hllin{116\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{20H}\\
+\hllin{117\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlnum{20H}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\hlstd{\ \ \ \ \ \ }\hlkwb{}\\
+\hllin{118\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{IRET}\hlstd{\ \ \ \ \ \ \ \ }\hlkwa{}\\
+\hllin{119\ }\hlstd{INTR\ }\hlkwa{ENDP}\\
+\hllin{120\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{121\ }MAIN\ }\hlkwa{ENDP}\\
+\hllin{122\ }\hlstd{CODES\ }\hlkwa{ENDS}\\
+\hllin{123\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize

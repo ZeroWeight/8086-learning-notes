@@ -1,0 +1,44 @@
+\noindent
+\ttfamily
+\hlstd{\hllin{01\ }DATA\ }\hlkwa{SEGMENT}\\
+\hllin{02\ }\hlstd{DATA\ }\hlkwa{ENDS}\\
+\hllin{03\ }\hlstd{\\
+\hllin{04\ }STACKS\ }\hlkwa{SEGMENT}\\
+\hllin{05\ }\hlstd{STACKS\ }\hlkwa{ENDS}\\
+\hllin{06\ }\hlstd{\\
+\hllin{07\ }CODE\ }\hlkwa{SEGMENT}\\
+\hllin{08\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{ASSUME\ }\hlstd{}\hlkwb{CS}\hlstd{}\hlopt{:}\hlstd{CODE}\hlopt{,}\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{:}\hlstd{DATA}\hlopt{,}\hlstd{}\hlkwb{SS}\hlstd{}\hlopt{:}\hlstd{STACKS\\
+\hllin{09\ }\ \\
+\hllin{10\ }MAIN\ }\hlkwa{PROC\ FAR}\\
+\hllin{11\ }\hlstd{}\hlkwc{START:}\\
+\hllin{12\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AX}\hlstd{}\hlopt{,}\hlstd{DATA\\
+\hllin{13\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DS}\hlstd{}\hlopt{,}\hlstd{}\hlkwb{AX}\\
+\hllin{14\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{15\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{283H}\\
+\hllin{16\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{10010000}\hlstd{B}\hlstd{\ \ \ \ }\hlstd{\\
+\hllin{17\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\hlstd{\ \ \ \ \ \ \ \ \ }\hlkwb{}\\
+\hllin{18\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\\
+\hllin{19\ }\hlkwc{NEXT:}\hlstd{\ \ \ \ }\hlkwc{}\\
+\hllin{20\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{280H}\\
+\hllin{21\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{IN\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{DX}\hlstd{\ \ \ \ \ \ \ \ \ \ }\hlkwb{}\\
+\hllin{22\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{282H}\\
+\hllin{23\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{OUT\ }\hlstd{}\hlkwb{DX}\hlstd{}\hlopt{,\ }\hlstd{}\hlkwb{AL}\hlstd{\ \ \ \ \ \ \ \ \ }\hlkwb{}\\
+\hllin{24\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{1}\\
+\hllin{25\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{16H}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlnum{}\\
+\hllin{26\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{NEXT}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{\\
+\hllin{27\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\\
+\hllin{28\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{16H}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlnum{}\\
+\hllin{29\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{CMP\ }\hlstd{}\hlkwb{AL}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{20H}\\
+\hllin{30\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JZ\ }\hlstd{EXIT}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{\\
+\hllin{31\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{JMP\ }\hlstd{NEXT\\
+\hllin{32\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\\
+\hllin{33\ }\hlkwc{EXIT:}\hlstd{\ \ \ \ }\hlkwc{}\\
+\hllin{34\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{MOV\ }\hlstd{}\hlkwb{AH}\hlstd{}\hlopt{,}\hlstd{}\hlnum{4}\hlstd{}\hlkwb{CH}\\
+\hllin{35\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{INT\ }\hlstd{}\hlnum{21H}\\
+\hllin{36\ }\hlstd{\\
+\hllin{37\ }MAIN\ }\hlkwa{ENDP}\\
+\hllin{38\ }\hlstd{CODE\ }\hlkwa{ENDS}\\
+\hllin{39\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{END\ }\hlstd{START}\\
+\mbox{}
+\normalfont
+\normalsize
