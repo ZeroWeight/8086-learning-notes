@@ -49,7 +49,7 @@ DATA segment
         db 10, 11, 12, 14, 15, 17, 18, 20, 21, 23, 25, 27, 29, 31, 33, 35
         db 37, 40, 42, 44, 47, 49, 52, 54, 57, 59, 62, 65, 67, 70, 73, 76
         db 79, 82, 85, 88, 90, 93, 97, 100, 103, 106, 109, 112, 115, 118, 121, 124
-    WAVE_TYPE db 00h ; 00h stands for saw wave, 01h stands for triangle wave, 02h stands for sine wave
+    WAVE_TYPE db 00h
 DATA ends
 
 STACKS segment STACK
@@ -70,23 +70,22 @@ START:
     
 MAIN_LOOP:
     mov ah, 1
-    int 16h ; test if the input buffer is empty
-    jnz JUDGE ; jump if a key is struck
+    int 16h
+    jnz JUDGE
         
 START_CONVERSION: 
-    ; start conversion
     mov ax, di
     cmp ax, 0ffh
     jnz P1
     mov ax, 0h
-    mov di, ax; set DI = 0x00 if DI reaches 0xff
+    mov di, ax
 P1: 
     mov al, WAVE_TYPE
-    cmp al, 00h ; generate a saw wave
+    cmp al, 00h
     jz WAVE_SAW
-    cmp al, 01h ; generate a triangle wave
+    cmp al, 01h
     jz WAVE_TRIANGLE
-    cmp al, 02h ; generate a sine wave
+    cmp al, 02h
     jz WAVE_SINE
     
 FLAG:
@@ -95,7 +94,7 @@ FLAG:
     push bx
     push cx
 DELAY: 
-    mov cx, 03ffh ; determines the delay
+    mov cx, 03ffh
 P2: 
     LOOP P2
     pop cx
@@ -107,12 +106,12 @@ P2:
     
 JUDGE: 
     mov ah, 1
-    int 21h ; get the key and store the char in AL
+    int 21h
     
     cmp al, 34h
-    jz EXIT ; exit if key '4' was struck
+    jz EXIT
     
-    sub al, 31h ; 31h is the ASCII for char '1'
+    sub al, 31h
     mov WAVE_TYPE, al    
     jmp START_CONVERSION
     

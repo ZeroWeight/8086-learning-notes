@@ -1,5 +1,3 @@
-;实验七内容一选作
-
 DATA SEGMENT
 DATA ENDS
 
@@ -16,137 +14,136 @@ START:
     
     MOV DX, 283H
     MOV AL, 10010000B
-    OUT DX, AL                    ;控制字，方式0，A输入，C输出
+    OUT DX, AL   
 SCAN:    
     MOV DX, 280H
-    IN AL, DX                ;读A口
+    IN AL, DX    
     
     CMP AL, 11000000B
-    JZ TOFLASH                   ;仅K6=K7=1
+    JZ TOFLASH   
     
     CMP AL, 10000000B
-    JZ L_MOVE                   ;仅K7=1
+    JZ L_MOVE    
     
     CMP AL, 01000000B
-    JZ R_MOVE                   ;仅K6=1
+    JZ R_MOVE    
     
     MOV DX, 282H
-    OUT DX, AL                    ;写C口
+    OUT DX, AL   
     
     MOV AH, 1
-    INT 16H                       ;检测键盘是否按下
-    JZ SCAN                ;没有，继续
+    INT 16H      
+    JZ SCAN      
     
     MOV AH, 0
-    INT 16H                ;读按键
+    INT 16H      
     CMP AL, 20H
-    JZ TOEXIT                   ;为空格，退出    
+    JZ TOEXIT    
     JMP SCAN 
         
-L_MOVE:                                ;左移
+L_MOVE:          
     MOV DX, 282H
     MOV BL, 10000000B
     MOV AL, BL
-    OUT DX, AL                ;输出亮灯                
+    OUT DX, AL   
 R_LEFT:    
-    ROL BL, 1                ;左移一位
+    ROL BL, 1    
     MOV AL, BL
     MOV DX, 282H
-    OUT DX, AL                ;亮灯
+    OUT DX, AL   
     
-    CALL DELAY                ;延时
+    CALL DELAY   
     
     MOV DX, 280H
-    IN AL, DX                 ;读A口
+    IN AL, DX    
     CMP AL, 10000000B
-    JNZ SCAN                ;状态改变，重新扫描
+    JNZ SCAN          
     
     MOV DX, 282H
-    OUT DX, AL                ;???                
+    OUT DX, AL        
     MOV AH, 1
-    INT 16H                       ;检测键盘是否按下
-    JZ R_LEFT                ;没有，继续循环
+    INT 16H           
+    JZ R_LEFT         
     
     MOV AH, 0
     INT 16H
-    CMP AL, 20H                   ;是否为空格
+    CMP AL, 20H       
     JZ EXIT
     
     JMP R_LEFT
 
-TOFLASH:                ;超出了条件转移的范围，利用无条件转移JMP进行转移
+TOFLASH:              
     JMP FLASH
 TOEXIT:
     JMP EXIT
       
-R_MOVE:                                ;右移
+R_MOVE:               
     MOV DX, 282H
     MOV BL, 10000000B        
     MOV AL, BL
-    OUT DX, AL                ;7号灯亮
+    OUT DX, AL        
     
 R_RIGHT: 
-    ROR BL, 1                ;右移
+    ROR BL, 1         
     MOV AL, BL
     MOV DX, 282H
-    OUT DX, AL                ;亮灯右移
     
-    CALL DELAY                ;延时
+    CALL DELAY         
     
     MOV DX, 280H
-    IN AL, DX                ;读A口
+    IN AL, DX          
     CMP AL, 01000000B        
-    JNZ SCAN                ;状态改变，重新扫描
+    JNZ SCAN           
     
     MOV DX, 282H
-    OUT DX, AL                ;???      
+    OUT DX, AL         
     MOV AH, 1        
-    INT 16H                       ;检测键盘是否按下
-    JZ R_RIGHT                ;没有，继续循环
+    INT 16H            
+    JZ R_RIGHT         
     MOV AH, 0
     INT 16H
-    CMP AL, 20H                   ;是否为空格
-    JZ EXIT                ;退出
+    CMP AL, 20H        
+    JZ EXIT            
     
     JMP R_RIGHT
 
 TOSCAN:
     JMP SCAN
-FLASH:                                ;闪烁
+FLASH:                 
     MOV DX, 282H
     MOV AL, 0
-    OUT DX, AL                ;全灭
+    OUT DX, AL         
     
     CALL DELAY
     
     MOV DX, 282H
     MOV AL, 0FFH
-    OUT DX, AL                ;全亮
+    OUT DX, AL         
 
     MOV DX, 280H
     IN AL, DX
     CMP AL, 11000000B
-    JNZ TOSCAN                ;状态改变，重新扫描
+    JNZ TOSCAN         
     
     CALL DELAY
     
     MOV DX, 282H
-    OUT DX, AL              ;???     
+    OUT DX, AL         
     MOV AH, 1
-    INT 16H                    ;检测键盘是否按下       
-    JZ FLASH                ;没有，继续循环
+    INT 16H             
+    JZ FLASH            
     MOV AH, 0
     INT 16H
-    CMP AL, 20H                   ;是否为空格
-    JZ EXIT                ;退出
+    CMP AL, 20H         
+    JZ EXIT             
     
     JMP FLASH
                      
-EXIT:                    ;退出
+EXIT:                   
     MOV AH,4CH
     INT 21H
     
-DELAY PROC                        ;延时较长，用两个计数器
+DELAY PROC              
     PUSH BX
     PUSH CX
     MOV BX, 0FH
@@ -154,9 +151,9 @@ WAITB:
     MOV CX, 0FFFFH
 WAITC:
     DEC CX
-    JNZ WAITC                ;计数循环1
+    JNZ WAITC           
     DEC BX
-    JNZ WAITB                ;计数循环2
+    JNZ WAITB           
     POP CX
     POP BX
     RET

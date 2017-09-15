@@ -1,10 +1,8 @@
-;实验六内容二
-
 DATA SEGMENT
-    HEAD DB 0DH, 0AH, 'D/A         A/D', 0DH, 0AH, '$'        ;表头
-    INFO DB 'Please input c to get the datas, e to exit:'        ;提示
-    LINE DB 0DH, 0AH, '$'                        ;空行
-    SPACE DB '         $'                        ;空格
+    HEAD DB 0DH, 0AH, 'D/A         A/D', 0DH, 0AH, '$'
+    INFO DB 'Please input c to get the datas, e to exit:'
+    LINE DB 0DH, 0AH, '$'
+    SPACE DB '         $'
 DATA ENDS
 
 STACKS SEGMENT
@@ -16,73 +14,73 @@ MAIN PROC FAR
 
 START:
     MOV AX,DATA
-    MOV DS,AX            ;载入数据
+    MOV DS,AX
     
-    MOV BX, 0            ;清零
+    MOV BX, 0
 
 DISPLAY:
 
-    MOV BL,BH            ;?
-    INC BH            ;记录操作次数
-    MOV CX, 20            ;用于计数
+    MOV BL,BH 
+    INC BH
+    MOV CX, 20
     MOV AH, 9
     LEA DX, HEAD
-    INT 21H               ;显示表头 
+    INT 21H
 ONE_LINE:
     MOV AL, BL   
     MOV DX, 280H        
-    OUT DX, AL                   ;数据送往DAC
+    OUT DX, AL       
     
-    CALL SHOW                   ;显示
-    CALL DELAY            ;延时
+    CALL SHOW        
+    CALL DELAY       
     
     MOV AH, 9
     LEA DX, SPACE
-    INT 21H                   ;输出空格
+    INT 21H          
     
     MOV DX, 289H
-    OUT DX, AL                 ;ADC进行转换
+    OUT DX, AL       
     
-    CALL DELAY            ;延时
+    CALL DELAY       
     
     MOV DX, 289H
-    IN AL, DX            ;读取转换结果
+    IN AL, DX        
     
-    CALL SHOW            ;显示
+    CALL SHOW        
     
     MOV AH, 9
     LEA DX, LINE
-    INT 21H                    ;换行
+    INT 21H          
     
-    ADD BL, 0FH          ;? 
-    LOOP ONE_LINE             ;输出下一行
+    ADD BL, 0FH      
+    LOOP ONE_LINE    
     
     MOV AH, 9
     LEA DX, INFO
-    INT 21H            ;提示信息
+    INT 21H          
     
 ENTER:    
     MOV AH, 1
-    INT 21H               ;读取输入
+    INT 21H          
     CMP AL, 'C'
     JZ DISPLAY
     CMP AL, 'c'    
-    JZ DISPLAY            ;继续
+    JZ DISPLAY       
     CMP AL, 'E'
     JZ EXIT
     CMP AL, 'e'
-    JZ EXIT            ;退出
+    JZ EXIT          
     JMP ENTER
     
 EXIT:    
     MOV AH,4CH
-    INT 21H            ;退出
+    INT 21H          
     
 DELAY PROC                    
     PUSH AX
     PUSH BX
     PUSH CX
-    MOV CX, 0FFFH        ;延时计数
+    MOV CX, 0FFFH    
 WAIT:   
     LOOP WAIT
     
@@ -92,36 +90,36 @@ WAIT:
     RET
 DELAY ENDP
 
-;==========显示AL里的内容,将压缩BCD转ASCII码==========
+
 SHOW PROC 
     PUSH AX
-    AND AL, 0F0H        ;读取高位
+    AND AL, 0F0H    
     SHR AL, 1
     SHR AL, 1
     SHR AL, 1
-    SHR AL, 1            ;把高位移至低位
+    SHR AL, 1       
     CMP AL, 09H        
-    JBE DIG2            ;小于等于9跳转
-    ADD AL, 07H            ;处理字母
+    JBE DIG2        
+    ADD AL, 07H     
 DIG2:
-    ADD AL, 30H            ;转ASCII码，如1H+30H=31H('1'),如0AH+07H+30H=41H('A')
+    ADD AL, 30H     
     MOV DL, AL
     MOV AH, 2
-    INT 21H            ;显示输出
+    INT 21H         
     POP AX
     
-    AND AL, 0FH            ;读取低位
+    AND AL, 0FH     
     CMP AL, 09H
     JBE DIG1
-    ADD AL, 07H            ;处理字母
+    ADD AL, 07H     
 DIG1:
-    ADD AL, 30H            ;转ASCII码
+    ADD AL, 30H     
     MOV DL, AL
     MOV AH, 2
-    INT 21H            ;显示输出
-    MOV DL, 'H'            ;显示说明为十六进制
+    INT 21H         
+    MOV DL, 'H'     
     MOV AH, 2
-    INT 21H            ;显示输出
+    INT 21H         
     RET
 SHOW ENDP
 

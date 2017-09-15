@@ -12,19 +12,19 @@ START:
     MOV AX,DATAS
     MOV DS,AX
     
-    MOV DX,283H         ;设置控制字
+    MOV DX,283H      
     MOV AL,10000000B
     OUT DX,AL
 
     MOV BX,0
     MOV CX,0
 MAIN:
-    MOV AH,0BH        ;检查是否有键盘键入
+    MOV AH,0BH       
     INT 21H
     INC AL
     JNE NEXT
     
-    MOV AH,1        ;键入高位
+    MOV AH,1        
     INT 21H
     CMP AL,'0'
     JS EXIT
@@ -33,7 +33,7 @@ MAIN:
     SUB AL,30H
     MOV BL,AL
    
-    MOV AH,1        ;键入低位
+    MOV AH,1
     INT 21H
     CMP AL,'0'
     JS EXIT
@@ -42,30 +42,30 @@ MAIN:
     SUB AL,30H
     MOV CL,AL
 
-CALL DELAY        ;延时
-CALL DELAY        ;延时
-CALL DELAY        ;延时
+CALL DELAY  
+CALL DELAY  
+CALL DELAY  
 
 NEXT:
 
-;输出0
+
     MOV DX,280H
     PUSH BX
     MOV BX,CX
     MOV AL,[NUM+BX]
-    OUT DX,AL        ;A口输出
+    OUT DX,AL      
     MOV DX,282H
     MOV AL,01H
     OUT DX,AL
     POP BX
     
-    CALL DELAY        ;延时
+    CALL DELAY     
 
-;关掉两个管
+
     MOV DX,282H
     MOV AL,00H
     OUT DX,AL    
-;输出1    
+
     MOV DX,280H
     MOV AL,[NUM+BX]
     OUT DX,AL
@@ -73,9 +73,9 @@ NEXT:
     MOV AL,02H
     OUT DX,AL
     
-    CALL DELAY        ;延时
+    CALL DELAY    
 
-;关掉两个管
+
     MOV DX,282H
     MOV AL,00H
     OUT DX,AL     
@@ -86,9 +86,7 @@ EXIT:
     INT 21H
 
 
-;-----------------延时子程序-------------------
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-DELAY  PROC    ;FAR;延时子程序
+DELAY  PROC  
        PUSH    CX
        PUSH    AX
        MOV    AX,000FH
@@ -101,7 +99,7 @@ X2:    DEC    CX
        POP    CX
        RET
 DELAY  ENDP  
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;----------------------------------------------
+
     
 CODES ENDS
     END START

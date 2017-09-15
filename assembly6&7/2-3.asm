@@ -1,5 +1,3 @@
-;实验七内容三
-
 DATAS SEGMENT
 DATAS ENDS
 
@@ -15,32 +13,32 @@ START:
     MOV DS,AX
     
     MOV DX, 283H
-    MOV AL, 10000000B       ;控制字，方式0，A口C口输出
+    MOV AL, 10000000B 
     OUT DX, AL
     
 NEXT:
     MOV DX, 282H
     MOV AL, 01H
-    OUT DX, AL                 ;C口输出01H
+    OUT DX, AL        
     MOV DX, 280H
     MOV AL, 3FH
-    OUT DX, AL              ;A口向数码管显示‘0’
+    OUT DX, AL        
     
     CALL DELAY
     
     MOV DX, 280H
     MOV AL, 06H
-    OUT DX, AL              ;A口向数码管显示‘1’
+    OUT DX, AL        
     MOV DX, 282H
     MOV AL, 02H
-    OUT DX, AL              ;C口输出02H
+    OUT DX, AL        
 
     CALL DELAY
     
     MOV AH, 1        
     INT 16H
     JZ NEXT
-    CMP AL, 20H                ;检测空格
+    CMP AL, 20H       
     JZ EXIT
     JMP NEXT
       

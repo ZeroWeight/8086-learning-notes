@@ -1,6 +1,3 @@
-;实验七内容一
-
-
 DATA SEGMENT
 DATA ENDS
 
@@ -17,20 +14,20 @@ START:
     
     MOV DX, 283H
     MOV AL, 10010000B    
-    OUT DX, AL                   ;控制字，方式0，A输入，C输出
+    OUT DX, AL         
     
 NEXT:    
     MOV DX, 280H
-    IN AL, DX                ;读A口                    
+    IN AL, DX          
     MOV DX, 282H
-    OUT DX, AL                ;写C口
+    OUT DX, AL         
     MOV AH, 1
-    INT 16H                ;检测键盘是否按下
-    JZ NEXT                ;没有则继续扫描
+    INT 16H            
+    JZ NEXT            
     MOV AH, 0
-    INT 16H                ;读按键                    
+    INT 16H            
     CMP AL, 20H
-    JZ EXIT                ;空格退出
+    JZ EXIT            
     JMP NEXT
                  
 EXIT:    
